@@ -29,7 +29,7 @@ class XiaoQuBaseSpider(BaseSpider):
         """
         district_name = area_dict.get(area_name, "")
         csv_file = self.today_path + "/{0}_{1}.csv".format(district_name, area_name)
-        with open(csv_file, "w") as f:
+        with open(csv_file, "w", encoding='utf-8-sig') as f:
             # 开始获得需要的板块数据
             xqs = self.get_xiaoqu_info(city_name, area_name)
             # 锁定
@@ -63,7 +63,10 @@ class XiaoQuBaseSpider(BaseSpider):
         try:
             page_box = soup.find_all('div', class_='page-box')[0]
             matches = re.search('.*"totalPage":(\d+),.*', str(page_box))
-            total_page = int(matches.group(1))
+            if matches:
+                total_page = int(matches.group(1))
+            else:
+                return
         except Exception as e:
             print("\tWarning: only find one page for {0}".format(area))
             print(e)
