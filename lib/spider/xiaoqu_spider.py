@@ -34,7 +34,8 @@ class XiaoQuBaseSpider(BaseSpider):
             xqs = self.get_xiaoqu_info(city_name, area_name)
             # 锁定
             if self.mutex.acquire(1):
-                self.total_num += len(xqs)
+                if xqs:
+                    self.total_num += len(xqs)
                 # 释放
                 self.mutex.release()
             if fmt == "csv":
@@ -65,8 +66,6 @@ class XiaoQuBaseSpider(BaseSpider):
             matches = re.search('.*"totalPage":(\d+),.*', str(page_box))
             if matches:
                 total_page = int(matches.group(1))
-            else:
-                return
         except Exception as e:
             print("\tWarning: only find one page for {0}".format(area))
             print(e)

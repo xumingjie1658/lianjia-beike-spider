@@ -14,8 +14,8 @@ class XiaoQu(object):
         self.on_sale = on_sale
 
     def text(self):
-        return self.district + "," + \
-                self.area + "," + \
-                self.name + "," + \
-                self.price + "," + \
+        return self.district + ";" + \
+                self.area + ";" + \
+                self.name + ";" + \
+                self.price + ";" + \
                 self.on_sale
